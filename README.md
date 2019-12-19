@@ -8,7 +8,7 @@
 
 ## About
 <p align="center">
-	<img src="images/autoencoder.jpeg" height='250px'/><br>
+	<img src="images/autoencoder.jpeg" height='500px'/><br>
 	<code>Fig 1: Architecture of an Autoencoder</code>
 </p>
 
