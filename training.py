@@ -30,9 +30,9 @@ def main(args = None):
 
 	parser.add_argument('--data_path', help = 'Path for the downloaded dataset', default = './dataset/')
 	parser.add_argument('--dataset', help = 'Dataset name. Must be one of MNIST, STL10, CIFAR10')
-    parser.add_argument('--epochs', help = 'Number of epochs', type = int, default = 75)
-    parser.add_argument('--batch_size', help = 'Batch size of the data', type = int, default = 28)
-    parser.add_argument('--learning_rate', help = 'Learning rate', type = float, default = 0.001)
+	parser.add_argument('--epochs', help = 'Number of epochs', type = int, default = 75)
+	parser.add_argument('--batch_size', help = 'Batch size of the data', type = int, default = 28)
+	parser.add_argument('--learning_rate', help = 'Learning rate', type = float, default = 0.001)
 	parser.add_argument('--use_cuda', help = 'CUDA usage', type = bool)
 	parser.add_argument('--network_type', help='Type of the network layers. Must be one of Conv, FC', default='FC')
 
