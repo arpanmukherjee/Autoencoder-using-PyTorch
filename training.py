@@ -1,11 +1,11 @@
 import os
 import torch
-import pickle
 import warnings
 import argparse
 import torchvision
 import numpy as np
 from model import *
+from visualize import imshow
 import matplotlib.pyplot as plt
 from torchvision import transforms
 from torch.autograd import Variable
@@ -86,6 +86,36 @@ def main(args = None):
 		auto_encoder = model.ConvolutionAE().to(device)
 	else:
 		raise ValueError('Network type must be either FC or Conv type')
+
+	# Show some real images
+	data_iter = iter(train_loader)
+	images, labels = data_iter.next()
+	imshow(torchvision.utils.make_grid(images))
+
+	# Train the model
+	auto_encoder.train()
+	criterion = nn.MSELoss()
+	optimizer = torch.optim.Adam(lr=learning_rate, params=auto_encoder.parameters(), weight_decay=1e-5)
+
+	for n_epoch in range(epochs): # loop over the dataset multiple times
+		reconstruction_loss = 0.0
+		for i, X, Y in enumerate(train_loader, 0):
+			X = X.view(X.size()[0], -1)
+			X = Variable(X).to(device)
+			Y = Variable(Y).to(device)
+
+			encoded, decoded = auto_encoder(X)
+
+			optimizer.zero_grad()
+			loss = criterion(X, decoded)
+			loss.backward()
+			optimizer.step()
+
+			reconstruction_loss += loss.item()
+			if i % 2000 == 1999:
+				print('[%d, %5d] Reconstruction loss: %.5f' %
+                  (n_epoch+1, i+1, reconstruction_loss/2000))
+			reconstruction_loss = 0.0
 
 
 
