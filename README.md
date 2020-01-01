@@ -28,7 +28,7 @@ pip install -r requirements.txt
 ```
 
 ### Training
-1. The network can be trained using `train.py` script. Currently it only accepts following arguments with the accpeted values. Please strictly follow the argument name name and any of the values.
+1. The network can be trained using `training.py` script. Currently it only accepts following arguments with the accpeted values. Please strictly follow the argument name name and any of the values.
 
 | argument | accepted values | default value |
 |--|--|--|
@@ -42,7 +42,7 @@ pip install -r requirements.txt
 
 Arguments which has no default value, you must provide value to run the script.
 ```
-python train.py --dataset STL10 --use_cuda True --network_type Conv
+python training.py --dataset STL10 --use_cuda True --network_type Conv
 ```
 If you think model is taking too much time, you can consider using GPU. Set `use_cuda` argument as `True`.
 ## Results
