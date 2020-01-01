@@ -6,7 +6,6 @@ import torchvision
 import numpy as np
 from model import *
 from visualize import imshow
-import matplotlib.pyplot as plt
 from torchvision import transforms
 from torch.autograd import Variable
 from torch.utils.data import DataLoader, Dataset

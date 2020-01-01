@@ -1,6 +1,5 @@
 torch
+numpy
 pickle
 torchvision
-numpy
 matplotlib
-torchvision
