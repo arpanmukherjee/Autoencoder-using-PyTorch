@@ -17,11 +17,6 @@ def main(args = None):
 	transforms.ToTensor(),
 	transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]) # transformation
 
-	epochs = parser.epochs # number of epochs
-	batch_size = parser.batch_size # batch size
-	learning_rate = parser.learning_rate # learning rate
-	data_path = parser.data_path # path of the dataset
-
 	ip_dim = 96*96 # input dimension
 	h1 = int(ip_dim/2) # hidden layer 1 dimension
 	op_dim = int(ip_dim/4) # output dimension
@@ -37,6 +32,11 @@ def main(args = None):
 	parser.add_argument('--network_type', help='Type of the network layers. Must be one of Conv, FC', default='FC')
 
 	parser = parser.parse_args(args)
+
+	epochs = parser.epochs # number of epochs
+	batch_size = parser.batch_size # batch size
+	learning_rate = parser.learning_rate # learning rate
+	data_path = parser.data_path # path of the dataset
 
 	# Creating dataset path if it doesn't exist
 	if parser.data_path is None:
@@ -116,6 +116,7 @@ def main(args = None):
 				print('[%d, %5d] Reconstruction loss: %.5f' %
                   (n_epoch+1, i+1, reconstruction_loss/2000))
 			reconstruction_loss = 0.0
+
 
 
 
