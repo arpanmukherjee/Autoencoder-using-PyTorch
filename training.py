@@ -10,26 +10,27 @@ from torchvision import transforms
 from torch.autograd import Variable
 from torch.utils.data import DataLoader, Dataset
 
-def main(args = None):
-	parser = argparse.ArgumentParser(description='Simple training script for training a Vanilla Autoencoder network.')
+def main():
+	parser = argparse.ArgumentParser(description='Simple training script for training model')
 
-	parser.add_argument('--data-path', help = 'Path for the downloaded dataset', default = '../dataset/')
-	parser.add_argument('--dataset', help = 'Dataset name. Must be one of MNIST, STL10, CIFAR10')
-	parser.add_argument('--epochs', help = 'Number of epochs', type = int, default = 75)
-	parser.add_argument('--batch-size', help = 'Batch size of the data', type = int, default = 16)
-	parser.add_argument('--learning-rate', help = 'Learning rate', type = float, default = 0.001)
-	parser.add_argument('--use-cuda', help = 'CUDA usage', type = bool, default = False)
-	parser.add_argument('--network-type', help = 'Type of the network layers. Must be one of Conv, FC', default = 'FC')
+	parser.add_argument('--epochs', help = 'Number of epochs (default: 75)', type = int, default = 75)
+	parser.add_argument('--batch-size', help = 'Batch size of the data (default: 16)', type = int, default = 16)
+	parser.add_argument('--learning-rate', help = 'Learning rate (default: 0.001)', type = float, default = 0.001)
 	parser.add_argument('--seed', help = 'Random seed (default:1)', type = int, default = 1)
-	parser.add_argument('--log-interval', help = 'how many batches to wait before logging training status', type = int, default = 100)
-	parser.add_argument('--save-model', help = 'For saving the current model', type = bool, default = True)
+	parser.add_argument('--data-path', help = 'Path for the downloaded dataset (default: ../dataset/)', default = '../dataset/')
+	parser.add_argument('--dataset', help = 'Dataset name. Must be one of MNIST, STL10, CIFAR10')
+	parser.add_argument('--use-cuda', help = 'CUDA usage (default: False)', type = bool, default = False)
+	parser.add_argument('--network-type', help = 'Type of the network layers. Must be one of Conv, FC (default: FC)', default = 'FC')
+	parser.add_argument('--weight-decay', help = 'weight decay (L2 penalty) (default: 1e-5)', type = float, default = 1e-5)
+	parser.add_argument('--log-interval', help = 'No of batches to wait before logging training status (default: 50)', type = int, default = 50)
+	parser.add_argument('--save-model', help = 'For saving the current model (default: True)', type = bool, default = True)
 
-	parser = parser.parse_args(args)
+	parser = parser.parse_args()
 
 	epochs = parser.epochs # number of epochs
 	batch_size = parser.batch_size # batch size
 	learning_rate = parser.learning_rate # learning rate
-	data_path = parser.data_path # path of the dataset
+	torch.manual_seed(parser.seed) # seed value
 
 	# Creating dataset path if it doesn't exist
 	if parser.data_path is None:
@@ -77,11 +78,9 @@ def main(args = None):
 		h1_dim = int(ip_dim/2) # hidden layer 1 dimension
 		op_dim = int(ip_dim/4) # output dimension
 	elif parser.dataset is None:
-		raise ValueError('Must provide dataset name')
+		raise ValueError('Must provide dataset')
 	else:
 		raise ValueError('Dataset name must be MNIST, STL10 or CIFAR10')
-	if parser.data_path is None:
-		raise ValueError('Must provide training dataset')
 
 	train_loader = DataLoader(train_data, batch_size = batch_size, shuffle = True)
 	test_loader = DataLoader(test_data, batch_size = batch_size, shuffle = False)
@@ -90,7 +89,7 @@ def main(args = None):
 	device = 'cpu'
 	if parser.use_cuda == False:
 		if torch.cuda.is_available():
-			warnings.warn('CUDA is available, please use for faster computation')
+			warnings.warn('CUDA is available, please use for faster convergence')
 		else:
 			device = 'cpu'
 	else:
@@ -108,16 +107,14 @@ def main(args = None):
 		raise ValueError('Network type must be either FC or Conv type')
 
 	# Show some real images
-	for images, labels in train_loader:
-		break
-	# data_iter = iter(train_loader)
-	# images, labels = data_iter.next()
+	data_iter = iter(train_loader)
+	images, labels = data_iter.next()
 	imshow(torchvision.utils.make_grid(images))
 
 	# Train the model
 	auto_encoder.train()
 	criterion = nn.MSELoss()
-	optimizer = torch.optim.Adam(lr = learning_rate, params = auto_encoder.parameters(), weight_decay = 1e-5)
+	optimizer = torch.optim.Adam(lr = learning_rate, params = auto_encoder.parameters(), weight_decay = parser.weight_decay)
 
 	for n_epoch in range(epochs): # loop over the dataset multiple times
 		reconstruction_loss = 0.0
@@ -134,13 +131,10 @@ def main(args = None):
 			optimizer.step()
 
 			reconstruction_loss += loss.item()
-			if i % 2000 == 1999:
+			if i % parser.log_interval == parser.log_interval-1:
 				print('[%d, %5d] Reconstruction loss: %.5f' %
                   (n_epoch+1, i+1, reconstruction_loss/2000))
 			reconstruction_loss = 0.0
-
-
-
 
 if __name__ == '__main__':
 	main()
