@@ -34,7 +34,7 @@ pip install -r requirements.txt
 | argument | accepted values | default value |
 |--|--|--|
 | epochs | integer | 75 |
-| batch-size | integer | 28 |
+| batch-size | integer | 16 |
 | learning-rate | float | 0.001 |
 | seed | int | 1 |
 | data-path | data directory | ../dataset/ |
@@ -47,7 +47,7 @@ pip install -r requirements.txt
 
 Arguments which has no default value, you must provide value to run the script.
 ```
-python training.py --dataset STL10 --use_cuda True --network_type Conv
+python training.py --dataset STL10 --use-cuda True --network-type FC
 ```
 If you think model is taking too much time, you can consider using GPU. Set `use_cuda` argument as `True`.
 ## Results
