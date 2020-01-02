@@ -1,4 +1,5 @@
 
+
 # Autoencoders using PyTorch
 
 ## Quick Links
@@ -32,13 +33,17 @@ pip install -r requirements.txt
 
 | argument | accepted values | default value |
 |--|--|--|
-| data_path | data directory | ./dataset/ |
-| dataset | MNIST or STL10 or CIFAR10 | - |
 | epochs | integer | 75 |
-| batch_size | integer | 28 |
-| learning_rate | float | 0.001 |
-| use_cuda | bool | - |
-| network_type | FC or Conv | FC |
+| batch-size | integer | 28 |
+| learning-rate | float | 0.001 |
+| seed | int | 1 |
+| data-path | data directory | ../dataset/ |
+| dataset | MNIST or STL10 or CIFAR10 | - |
+| use_cuda | bool | False |
+| network-type | FC or Conv | FC |
+| weight-decay | float | 1e-5 |
+| log-interval | int | 50 |
+| save-model | bool | True |
 
 Arguments which has no default value, you must provide value to run the script.
 ```

@@ -118,7 +118,7 @@ def main():
 
 	for n_epoch in range(epochs): # loop over the dataset multiple times
 		reconstruction_loss = 0.0
-		for i, (X, Y) in enumerate(train_loader):
+		for batch_idx, (X, Y) in enumerate(train_loader):
 			X = X.view(X.size()[0], -1)
 			X = Variable(X).to(device)
 			Y = Variable(Y).to(device)
@@ -131,9 +131,9 @@ def main():
 			optimizer.step()
 
 			reconstruction_loss += loss.item()
-			if i % parser.log_interval == parser.log_interval-1:
+			if (batch_idx + 1) % parser.log_interval == 0:
 				print('[%d, %5d] Reconstruction loss: %.5f' %
-                  (n_epoch+1, i+1, reconstruction_loss/parser.log_interval))
+                  (n_epoch+1, batch_idx + 1, reconstruction_loss/parser.log_interval))
 			reconstruction_loss = 0.0
 	if parser.save_model:
 		torch.save(auto_encoder.state_dict(), "Autoencoder.pth")
