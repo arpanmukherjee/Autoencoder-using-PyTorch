@@ -10,7 +10,7 @@
 
 ## About
 <p align="center">
-	<img src="images/autoencoder.jpeg" height='400px'/><br>
+	<img src="images/autoencoder.jpeg" height='600px'/><br>
 	<code>Fig 1: Architecture of an Autoencoder</code>
 </p>
 
