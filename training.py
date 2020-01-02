@@ -133,8 +133,11 @@ def main():
 			reconstruction_loss += loss.item()
 			if i % parser.log_interval == parser.log_interval-1:
 				print('[%d, %5d] Reconstruction loss: %.5f' %
-                  (n_epoch+1, i+1, reconstruction_loss/2000))
+                  (n_epoch+1, i+1, reconstruction_loss/parser.log_interval))
 			reconstruction_loss = 0.0
+	if parser.save_model:
+		torch.save(auto_encoder.state_dict(), "Autoencoder.pth")
+
 
 if __name__ == '__main__':
 	main()
