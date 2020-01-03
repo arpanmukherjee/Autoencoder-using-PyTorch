@@ -58,14 +58,14 @@ python main.py --dataset MNIST --use-cuda True
 ```
 
 <p align="center">
-	<img src="images/actual_img.jpeg" height='300px'/><br>
+	<img src="images/actual_img.jpeg" height='200px'/><br>
 	<code>Fig 2: Actual images from the dataset</code>
 </p>
 
 
 
 <p align="center">
-	<img src="images/decoded_img.jpeg" height='300px'/><br>
+	<img src="images/decoded_img.jpeg" height='200px'/><br>
 	<code>Fig 3: Decoded images from the network</code>
 </p>
 
