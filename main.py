@@ -106,11 +106,6 @@ def main():
 	else:
 		raise ValueError('Network type must be either FC or Conv type')
 
-	# Show some real images
-	data_iter = iter(train_loader)
-	images, labels = data_iter.next()
-	torchvision.utils.save_image(torchvision.utils.make_grid(images, nrow=4), 'actual_img.jpeg')
-
 	# Train the model
 	auto_encoder.train()
 	criterion = nn.MSELoss()
@@ -121,7 +116,6 @@ def main():
 		for batch_idx, (X, Y) in enumerate(train_loader):
 			X = X.view(X.size()[0], -1)
 			X = Variable(X).to(device)
-			Y = Variable(Y).to(device)
 
 			encoded, decoded = auto_encoder(X)
 
@@ -137,6 +131,28 @@ def main():
 			reconstruction_loss = 0.0
 	if parser.save_model:
 		torch.save(auto_encoder.state_dict(), "Autoencoder.pth")
+
+
+	# Save real images
+	data_iter = iter(test_loader)
+	images, labels = data_iter.next()
+	torchvision.utils.save_image(torchvision.utils.make_grid(images, nrow=4), 'images/actual_img.jpeg')
+
+	# Load trained model and get decoded images
+	auto_encoder.load_state_dict(torch.load('Autoencoder.pth'))
+	auto_encoder.eval()
+	images = images.view(images.size()[0], -1)
+	images = Variable(images).to(device)
+	encoded, decoded = auto_encoder(images)
+
+	# Save decoded images
+	if parser.dataset == 'MNIST':
+		decoded = decoded.view(decoded.size()[0], 1, 28, 28)
+	elif parser.dataset == 'STL10':
+		decoded = decoded.view(decoded.size()[0], 3, 96, 96)
+	elif parser.dataset == 'CIFAR10':
+		decoded = decoded.view(decoded.size()[0], 3, 32, 32)
+	torchvision.utils.save_image(torchvision.utils.make_grid(images, nrow=4), 'images/decoded_img.jpeg')
 
 
 if __name__ == '__main__':
