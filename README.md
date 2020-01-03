@@ -29,7 +29,7 @@ pip install -r requirements.txt
 ```
 
 ### Training
-1. The network can be trained using `main.py` script. Currently it only accepts following arguments with the accpeted values. Please strictly follow the argument name name and any of the values.
+The network can be trained using `main.py` script. Currently it only accepts following arguments with the accpeted values. Please strictly follow the argument name name and any of the values.
 
 | argument | accepted values | default value |
 |--|--|--|
@@ -51,3 +51,18 @@ python main.py --dataset STL10 --use-cuda True --network-type FC
 ```
 If you think model is taking too much time, you can consider using GPU. Set `use_cuda` argument as `True`.
 ## Results
+Following are the resultant images for my trained model. I have trained my model on `MNIST` dataset for 75 epochs.
+
+<p align="center">
+	<img src="images/actual_img.jpeg" height='300px'/><br>
+	<code>Fig 2: Actual images from the dataset</code>
+</p>
+
+
+
+<p align="center">
+	<img src="images/decoded_img.jpeg" height='300px'/><br>
+	<code>Fig 3: Decoded images from the network</code>
+</p>
+
+As you can see, even though there are some differences, but you can easily identify both the images are same.
