@@ -5,7 +5,7 @@ import argparse
 import torchvision
 import numpy as np
 from model import *
-from visualize import imshow
+from utils import *
 from torchvision import transforms
 from torch.autograd import Variable
 from torch.utils.data import DataLoader, Dataset
@@ -42,37 +42,37 @@ def main():
 
 	# Downloading proper dataset and creating data loader
 	if parser.dataset == 'MNIST':
-        T = transforms.Compose([
-            transforms.ToTensor(),
-            transforms.Normalize((0.1307,), (0.3081,))
-        ])
+		T = transforms.Compose([
+			transforms.ToTensor(),
+			transforms.Normalize((0.1307,), (0.3081,))
+		])
 
 		train_data = torchvision.datasets.MNIST(data_path, train = True, download = True, transform = T)
-        test_data = torchvision.datasets.MNIST(data_path, train = False, download = True, transform = T)
+		test_data = torchvision.datasets.MNIST(data_path, train = False, download = True, transform = T)
 
 		ip_dim = 1*28*28 # input dimension
 		h1_dim = int(ip_dim/2) # hidden layer 1 dimension
 		op_dim = int(ip_dim/4) # output dimension
 	elif parser.dataset == 'STL10':
-        T = transforms.Compose([
+		T = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         ])
 
-		train_data = torchvision.datasets.STL10(data_path, train = True, download = True, transform = T)
-        test_data = torchvision.datasets.STL10(data_path, train = False, download = True, transform = T)
+		train_data = torchvision.datasets.STL10(data_path, split = 'train', download = True, transform = T)
+		test_data = torchvision.datasets.STL10(data_path, split = 'test', download = True, transform = T)
 
 		ip_dim = 3*96*96 # input dimension
 		h1_dim = int(ip_dim/2) # hidden layer 1 dimension
 		op_dim = int(ip_dim/4) # output dimension
 	elif parser.dataset == 'CIFAR10':
-        T = transforms.Compose([
+		T = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         ])
 
 		train_data = torchvision.datasets.CIFAR10(data_path, train = True, download = True, transform = T)
-        test_data = torchvision.datasets.CIFAR10(data_path, train = False, download = True, transform = T)
+		test_data = torchvision.datasets.CIFAR10(data_path, train = False, download = True, transform = T)
 
 		ip_dim = 3*32*32 # input dimension
 		h1_dim = int(ip_dim/2) # hidden layer 1 dimension
@@ -109,7 +109,7 @@ def main():
 	# Show some real images
 	data_iter = iter(train_loader)
 	images, labels = data_iter.next()
-	imshow(torchvision.utils.make_grid(images))
+	torchvision.utils.save_image(torchvision.utils.make_grid(images, nrow=4), 'actual_img.jpeg')
 
 	# Train the model
 	auto_encoder.train()
