@@ -1,5 +1,6 @@
 
 
+
 # Autoencoders using PyTorch
 
 ## Quick Links
@@ -17,7 +18,7 @@
 
 ## Setup
 ### Installation
-1. Download the github repo by using following command running from terminal.
+1. Download the GitHub repo by using the following command running from the terminal.
 ```
 git clone https://github.com/arpanmukherjee/Autoencoders-and-more-using-PyTorch.git
 cd Autoencoders-and-more-using-PyTorch/
@@ -29,7 +30,7 @@ pip install -r requirements.txt
 ```
 
 ### Training
-The network can be trained using `main.py` script. Currently it only accepts following arguments with the accpeted values. Please strictly follow the argument name name and any of the values.
+The network can be trained using `main.py` script. Currently, it only accepts the following arguments with the allowed values. Please strictly follow the argument name and any of the values.
 
 | argument | accepted values | default value |
 |--|--|--|
@@ -45,13 +46,16 @@ The network can be trained using `main.py` script. Currently it only accepts fol
 | log-interval | int | 50 |
 | save-model | bool | True |
 
-Arguments which has no default value, you must provide value to run the script.
+Arguments that have no default value, you must provide value to run the script.
 ```
 python main.py --dataset STL10 --use-cuda True --network-type FC
 ```
-If you think model is taking too much time, you can consider using GPU. Set `use_cuda` argument as `True`.
+If you think the model is taking too much time, you can consider using GPU. Set `use_cuda` argument as `True`.
 ## Results
-Following are the resultant images for my trained model. I have trained my model on `MNIST` dataset for 75 epochs.
+The following are the resultant images for my trained model. I have trained my model on the `MNIST` dataset for `75` epochs.
+```
+python main.py --dataset MNIST --use-cuda True
+```
 
 <p align="center">
 	<img src="images/actual_img.jpeg" height='300px'/><br>
@@ -65,4 +69,4 @@ Following are the resultant images for my trained model. I have trained my model
 	<code>Fig 3: Decoded images from the network</code>
 </p>
 
-As you can see, even though there are some differences, but you can easily identify both the images are same.
+As you can see, even though there are some differences, but you can easily identify both the images are the same.
