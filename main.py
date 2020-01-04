@@ -152,7 +152,7 @@ def main():
 		decoded = decoded.view(decoded.size()[0], 3, 96, 96)
 	elif parser.dataset == 'CIFAR10':
 		decoded = decoded.view(decoded.size()[0], 3, 32, 32)
-	torchvision.utils.save_image(torchvision.utils.make_grid(images, nrow=4), 'images/decoded_img.jpeg')
+	torchvision.utils.save_image(torchvision.utils.make_grid(decoded, nrow=4), 'images/decoded_img.jpeg')
 
 
 if __name__ == '__main__':
