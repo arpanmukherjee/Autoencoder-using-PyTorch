@@ -20,13 +20,17 @@
 ### Installation
 1. Download the GitHub repo by using the following command running from the terminal.
 ```
-git clone https://github.com/arpanmukherjee/Autoencoders-and-more-using-PyTorch.git
+bash
+$ git clone https://github.com/arpanmukherjee/Autoencoders-and-more-using-PyTorch.git
+```
+```
 cd Autoencoders-and-more-using-PyTorch/
 ```
 
 2. Install `pip` from the terminal, for more details please look [here](https://pypi.org/project/pip/). Go to the following project folder and install all the dependencies by running the following command. By running this command, it will install all the dependencies you will require to run the project.
 ```
-pip install -r requirements.txt
+bash
+$ pip install -r requirements.txt
 ```
 
 ### Training
