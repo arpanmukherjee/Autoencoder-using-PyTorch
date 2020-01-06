@@ -58,7 +58,7 @@ python main.py --dataset MNIST --use-cuda True
 ```
 | Trained Model | Actual Image | Decoded Image |
 |--|--|--|
-| MNIST |<p align="center"><img src="images/actual_img_MNIST.jpeg" height='300px'/></p> | <p align="center"><img src="images/decoded_img_MNIST.jpeg" height='300px'/></p> |
-| CIFAR10 |<p align="center"><img src="images/actual_img_CIFAR10.jpeg" height='300px'/></p> | <p align="center"><img src="images/decoded_img_CIFAR10.jpeg" height='300px'/></p> |
+| [MNIST](https://drive.google.com/file/d/1-3oOeUDHCUE45dlHrw7fA9Uj4X1Rlkai/view?usp=sharing) |<p align="center"><img src="images/actual_img_MNIST.jpeg" height='300px'/></p> | <p align="center"><img src="images/decoded_img_MNIST.jpeg" height='300px'/></p> |
+| [CIFAR10](https://drive.google.com/file/d/1-3l18YKFbQNM6O-xrQeGegYvbGLNL3KC/view?usp=sharing) |<p align="center"><img src="images/actual_img_CIFAR10.jpeg" height='300px'/></p> | <p align="center"><img src="images/decoded_img_CIFAR10.jpeg" height='300px'/></p> |
 
 As you can see, even though there are some differences, but you can easily identify both the images are the same. In case of `CIFAR10` datatset, images are a little blurry, this could be because I trained my model only `75` epochs.
