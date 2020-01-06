@@ -25,23 +25,23 @@ def main():
 	parser.add_argument('--log-interval', help = 'No of batches to wait before logging training status (default: 50)', type = int, default = 50)
 	parser.add_argument('--save-model', help = 'For saving the current model (default: True)', type = bool, default = True)
 
-	parser = parser.parse_args()
+	args = parser.parse_args()
 
-	epochs = parser.epochs # number of epochs
-	batch_size = parser.batch_size # batch size
-	learning_rate = parser.learning_rate # learning rate
-	torch.manual_seed(parser.seed) # seed value
+	epochs = args.epochs # number of epochs
+	batch_size = args.batch_size # batch size
+	learning_rate = args.learning_rate # learning rate
+	torch.manual_seed(args.seed) # seed value
 
 	# Creating dataset path if it doesn't exist
-	if parser.data_path is None:
+	if args.data_path is None:
 		raise ValueError('Must provide dataset path')
 	else:
-		data_path = parser.data_path
+		data_path = args.data_path
 		if not os.path.isdir(data_path):
 			os.mkdir(data_path)
 
 	# Downloading proper dataset and creating data loader
-	if parser.dataset == 'MNIST':
+	if args.dataset == 'MNIST':
 		T = transforms.Compose([
 			transforms.ToTensor(),
 			transforms.Normalize((0.1307,), (0.3081,))
@@ -53,7 +53,7 @@ def main():
 		ip_dim = 1*28*28 # input dimension
 		h1_dim = int(ip_dim/2) # hidden layer 1 dimension
 		op_dim = int(ip_dim/4) # output dimension
-	elif parser.dataset == 'STL10':
+	elif args.dataset == 'STL10':
 		T = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
@@ -65,7 +65,7 @@ def main():
 		ip_dim = 3*96*96 # input dimension
 		h1_dim = int(ip_dim/2) # hidden layer 1 dimension
 		op_dim = int(ip_dim/4) # output dimension
-	elif parser.dataset == 'CIFAR10':
+	elif args.dataset == 'CIFAR10':
 		T = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
@@ -77,7 +77,7 @@ def main():
 		ip_dim = 3*32*32 # input dimension
 		h1_dim = int(ip_dim/2) # hidden layer 1 dimension
 		op_dim = int(ip_dim/4) # output dimension
-	elif parser.dataset is None:
+	elif args.dataset is None:
 		raise ValueError('Must provide dataset')
 	else:
 		raise ValueError('Dataset name must be MNIST, STL10 or CIFAR10')
@@ -87,7 +87,7 @@ def main():
 
 	# use CUDA or not
 	device = 'cpu'
-	if parser.use_cuda == False:
+	if args.use_cuda == False:
 		if torch.cuda.is_available():
 			warnings.warn('CUDA is available, please use for faster convergence')
 		else:
@@ -99,9 +99,9 @@ def main():
 			raise ValueError('CUDA is not available, please set it False')
 
 	# Type of layer
-	if parser.network_type == 'FC':
+	if args.network_type == 'FC':
 		auto_encoder = Autoencoder(ip_dim, h1_dim, op_dim).to(device)
-	elif parser.network_type == 'Conv':
+	elif args.network_type == 'Conv':
 		auto_encoder = ConvolutionAE().to(device)
 	else:
 		raise ValueError('Network type must be either FC or Conv type')
@@ -109,7 +109,7 @@ def main():
 	# Train the model
 	auto_encoder.train()
 	criterion = nn.MSELoss()
-	optimizer = torch.optim.Adam(lr = learning_rate, params = auto_encoder.parameters(), weight_decay = parser.weight_decay)
+	optimizer = torch.optim.Adam(lr = learning_rate, params = auto_encoder.parameters(), weight_decay = args.weight_decay)
 
 	for n_epoch in range(epochs): # loop over the dataset multiple times
 		reconstruction_loss = 0.0
@@ -125,11 +125,11 @@ def main():
 			optimizer.step()
 
 			reconstruction_loss += loss.item()
-			if (batch_idx + 1) % parser.log_interval == 0:
+			if (batch_idx + 1) % args.log_interval == 0:
 				print('[%d, %5d] Reconstruction loss: %.5f' %
-                  (n_epoch+1, batch_idx + 1, reconstruction_loss/parser.log_interval))
+                  (n_epoch+1, batch_idx + 1, reconstruction_loss/args.log_interval))
 			reconstruction_loss = 0.0
-	if parser.save_model:
+	if args.save_model:
 		torch.save(auto_encoder.state_dict(), "Autoencoder.pth")
 
 
@@ -146,11 +146,11 @@ def main():
 	encoded, decoded = auto_encoder(images)
 
 	# Save decoded images
-	if parser.dataset == 'MNIST':
+	if args.dataset == 'MNIST':
 		decoded = decoded.view(decoded.size()[0], 1, 28, 28)
-	elif parser.dataset == 'STL10':
+	elif args.dataset == 'STL10':
 		decoded = decoded.view(decoded.size()[0], 3, 96, 96)
-	elif parser.dataset == 'CIFAR10':
+	elif args.dataset == 'CIFAR10':
 		decoded = decoded.view(decoded.size()[0], 3, 32, 32)
 	torchvision.utils.save_image(torchvision.utils.make_grid(decoded, nrow=4), 'images/decoded_img.jpeg')
 
