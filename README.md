@@ -19,17 +19,13 @@
 ## Setup
 ### Installation
 1. Download the GitHub repo by using the following command running from the terminal.
-```
-bash
+```shell
 $ git clone https://github.com/arpanmukherjee/Autoencoders-and-more-using-PyTorch.git
-```
-```
-cd Autoencoders-and-more-using-PyTorch/
+$ cd Autoencoders-and-more-using-PyTorch/
 ```
 
 2. Install `pip` from the terminal, for more details please look [here](https://pypi.org/project/pip/). Go to the following project folder and install all the dependencies by running the following command. By running this command, it will install all the dependencies you will require to run the project.
-```
-bash
+```shell
 $ pip install -r requirements.txt
 ```
 
@@ -51,14 +47,14 @@ The network can be trained using `main.py` script. Currently, it only accepts th
 | save-model | bool | True |
 
 Arguments that have no default value, you must provide value to run the script.
-```
-python main.py --dataset STL10 --use-cuda True --network-type FC
+```shell
+$ python main.py --dataset STL10 --use-cuda True --network-type FC
 ```
 If you think the model is taking too much time, you can consider using GPU. Set `use_cuda` argument as `True`.
 ## Results
 The following are the resultant images for my trained model. I have trained my model on the `MNIST` dataset for `75` epochs.
-```
-python main.py --dataset MNIST --use-cuda True
+```shell
+$ python main.py --dataset MNIST --use-cuda True
 ```
 | Trained Model | Actual Image | Decoded Image |
 |--|--|--|
