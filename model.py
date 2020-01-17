@@ -26,10 +26,14 @@ class Autoencoder(nn.Module):
 class ConvolutionAE(nn.Module):
     def __init__(self):
         super(ConvolutionAE, self).__init__()
-        self.conv1 = nn.Conv2d(in_channels=1, out_channels=32, kernel_size=3, padding=1)
-        self.conv2 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, padding=1)
-        self.deconv1 = nn.ConvTranspose2d(in_channels=64, out_channels=32, kernel_size=3, padding=1)
-        self.deconv2 = nn.ConvTranspose2d(in_channels=32, out_channels=1, kernel_size=3, padding=1)
+        self.conv1 = nn.Conv2d(
+            in_channels=1, out_channels=32, kernel_size=3, padding=1)
+        self.conv2 = nn.Conv2d(
+            in_channels=32, out_channels=64, kernel_size=3, padding=1)
+        self.deconv1 = nn.ConvTranspose2d(
+            in_channels=64, out_channels=32, kernel_size=3, padding=1)
+        self.deconv2 = nn.ConvTranspose2d(
+            in_channels=32, out_channels=1, kernel_size=3, padding=1)
         self.pool = nn.MaxPool2d(kernel_size=2, return_indices=True)
         self.unpool = nn.MaxUnpool2d(kernel_size=2)
         self.relu = nn.ReLU()
