@@ -1,5 +1,6 @@
 from torch import nn
 
+
 class Autoencoder(nn.Module):
     def __init__(self, ip_dim, h_dim, op_dim):
         super(Autoencoder, self).__init__()
@@ -20,6 +21,7 @@ class Autoencoder(nn.Module):
         encoded = self.encoder(X)
         decoded = self.decoder(encoded)
         return encoded, decoded
+
 
 class ConvolutionAE(nn.Module):
     def __init__(self):
