@@ -147,7 +147,7 @@ def main():
             if (batch_idx + 1) % args.log_interval == 0:
                 print('[%d, %5d] Reconstruction loss: %.5f' %
                       (n_epoch + 1, batch_idx + 1, reconstruction_loss / args.log_interval))
-            reconstruction_loss = 0.0
+                reconstruction_loss = 0.0
     if args.save_model:
         torch.save(auto_encoder.state_dict(), "Autoencoder.pth")
 
